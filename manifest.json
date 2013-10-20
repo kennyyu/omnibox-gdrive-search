@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name" : "Google Drive Search",
+  "description" : "Search your google drive directly from the omnibox!",
+  "version" : "1.0",
+
+  "background": {
+//    "scripts" : [ "background.js" ],
+    "page" : "hello.html"
+  },
+  "options_page" : "foo.html",
+
+  "permissions" : [
+    "https://www.googleapis.com/",
+    "https://apis.google.com/"
+  ],
+
+  "content_security_policy" : "script-src 'self' https://apis.google.com; object-src 'self'",
+
+  "omnibox" : {
+    "keyword" : "gd"
+  }
+}
