@@ -11,9 +11,9 @@
   "options_page": "options.html",
 
   "icons": {
-    "16": "16-drive.png",
-    "48": "48-drive.png",
-    "128": "128-drive.png"
+    "16": "icons/16-drive.png",
+    "48": "icons/48-drive.png",
+    "128": "icons/128-drive.png"
   },
 
   "permissions": [
