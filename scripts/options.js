@@ -12,6 +12,10 @@ function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
     // Access token has been successfully retrieved, requests can be sent to the API.
     authStatus.style.display = 'block';
+    // refresh the background page with the newly authorized permissions
+    chrome.runtime.sendMessage({refresh: true}, function(response) {
+      console.log("background page refreshed with response: " + response);
+    });
   } else {
     // No access token could be retrieved, show the button to start the authorization flow.
     authButton.style.display = 'block';
