@@ -4,7 +4,7 @@
 //
 // author: Kenny Yu
 
-MAX_SEARCH_RESULTS = 10;
+MAX_SEARCH_RESULTS = 7;
 
 chrome.omnibox.onInputChanged.addListener(
   function(text, suggest) {
