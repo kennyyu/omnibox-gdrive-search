@@ -7,7 +7,9 @@
 var CLIENT_ID = '372787255618-aceaf3i3kcv6b5uih4tjtt3kdmd0lcj0.apps.googleusercontent.com';
 
 // Google Drive API permissions */
-var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+var SCOPES = [
+  'https://www.googleapis.com/auth/drive.metadata.readonly',
+];
 
 // Called when the client library is loaded to start the auth flow.
 function handleClientLoad() {

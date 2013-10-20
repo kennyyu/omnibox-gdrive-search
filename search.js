@@ -4,58 +4,21 @@
 //
 // author: Kenny Yu
 
-MAX_SEARCH_RESULTS = 7;
-
-INIT_SEARCH_RESULTS = 500;
-
-// Mapping from id -> suggestion
-var data = {}
+// Maximum number of search results for each request
+MAX_SEARCH_RESULTS = 10;
 
 // Called when authorization server replies.
 function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
     // Access token has been successfully retrieved
     console.log("auth worked");
-    //initData();
   } else {
     // auth failed
     console.log("auth failed, must init manually");
   }
 }
 
-// Since files.list with a "q=QUERY" parameter is down, then
-// we must add this hack to prefetch data first, and perform
-// a search on the client side instead.
-//
-// This function will populate data, which we will search over
-// when the user enters input.
-function initData() {
-  console.log("init data...");
-  gapi.client.load('drive', 'v2', function() {
-    request = gapi.client.request({
-      'path': '/drive/v2/files',
-      'method': 'GET',
-      'params': {
-        'maxResults': INIT_SEARCH_RESULTS,
-      }
-    });
-    request.execute(function(response) {
-      console.log(response);
-      for (var i in response.items) {
-        item = response.items[i];
-        data[item.id] = {
-          content: item.alternateLink,
-          description: item.title,
-          time: new Date(item.lastViewedByMeDate),
-        };
-      }
-      console.log(data);
-    });
-  });
-}
-
-// This will remove any "&" and """ characters from
-// a string.
+// This will remove any "&" and """ characters from a string.
 function escapeString(s) {
   return s.replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;");
@@ -64,11 +27,8 @@ function escapeString(s) {
 chrome.omnibox.onInputChanged.addListener(
   function(text, suggest) {
     console.log('inputChanged: ' + text);
-    // As of Oct 20, 2013, the files.list call with the 'q' parameter
-    // returns a Server Error (Code 500). To get around this, we
-    // first prefetch a whole bunch of files and perform searching
-    // on the client side.
     gapi.client.load('drive', 'v2', function() {
+      // Query for any files where the title contains the text query
       request = gapi.client.request({
         'path': '/drive/v2/files',
         'method': 'GET',
@@ -77,18 +37,10 @@ chrome.omnibox.onInputChanged.addListener(
           'maxResults': MAX_SEARCH_RESULTS,
         }
       });
+      // Once we have the results, find the part of the title that
+      // matches and highlight it with the <match></match> tag.
       request.execute(function(response) {
         console.log(response);
-        /*
-        for (var i in response.items) {
-          var item = response.items[i];
-          data[item.id] = {
-            content: item.alternateLink,
-            description: item.title,
-            time: new Date(item.lastViewedByMeDate),
-          };
-        }*/
-
         var suggestions = [];
         text = escapeString(text);
         for (var i in response.items) {
@@ -101,13 +53,11 @@ chrome.omnibox.onInputChanged.addListener(
               description: escapeString(
                 "<dim>" + desc.slice(0, index) + "</dim>"
                 + "<match>" + desc.slice(index, index + text.length) + "</match>"
-                + "<dim>" + desc.slice(index + text.length) + "</dim>"),
+                + "<dim>" + desc.slice(index + text.length) + "</dim>"
+                + " | <url>" + item.alternateLink + "</url>"),
             })
           }
         }
-        // Return only the first 8, sorted by the last time user viewed them
-//        suggestions = suggestions.slice(0, 8);
-//        suggestions.sort(function(a, b) {return a.time - b.time;});
         console.log(suggestions);
         suggest(suggestions);
       });
