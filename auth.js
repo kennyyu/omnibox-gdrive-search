@@ -39,6 +39,9 @@ function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
     // Access token has been successfully retrieved, requests can be sent to the API.
     authStatus.style.display = 'block';
+    if (!(typeof initData === 'undefined')) {
+      initData();
+    }
   } else {
     // No access token could be retrieved, show the button to start the authorization flow.
     authButton.style.display = 'block';
