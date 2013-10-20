@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Omnibox Google Drive Search",
+  "name": "Omnibox GDrive Search",
   "description": "Search and open your Google Drive files from the omnibox!",
   "version": "0.0.1",
 
