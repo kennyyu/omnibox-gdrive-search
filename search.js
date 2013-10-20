@@ -9,16 +9,12 @@ MAX_SEARCH_RESULTS = 10;
 chrome.omnibox.onInputChanged.addListener(
   function(text, suggest) {
     console.log('inputChanged: ' + text);
-//    suggest([
-//      {content: text + " one", description: "the first one"},
-//      {content: text + " number two", description: "the second entry"}
-//    ]);
     gapi.client.load('drive', 'v2', function() {
       request = gapi.client.request({
         'path': '/drive/v2/files',
         'method': 'GET',
         'params': {
-  //        'q' : 'CS261',
+  //        'q' : 'text',
           'maxResults': MAX_SEARCH_RESULTS,
         }
       });
@@ -28,8 +24,8 @@ chrome.omnibox.onInputChanged.addListener(
         for (var i in response.items) {
           item = response.items[i];
           suggestions.push({
-            content: item.title,
-            description: "<url>%s</url>".format(item.alternateLink),
+            content: item.alternateLink,
+            description: "<dim>" + item.title + "</dim>",
           });
         }
         suggest(suggestions);

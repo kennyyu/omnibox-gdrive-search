@@ -6,7 +6,7 @@
   "version" : "1.0",
 
   "background": {
-    "page" : "hello.html"
+    "page" : "background.html"
   },
   "options_page" : "options.html",
 
