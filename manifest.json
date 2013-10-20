@@ -3,7 +3,7 @@
 
   "name": "Google Drive Search",
   "description": "Search your google drive directly from the omnibox!",
-  "version": "1.0",
+  "version": "0.0.1",
 
   "background": {
     "page": "background.html"
@@ -11,7 +11,9 @@
   "options_page": "options.html",
 
   "icons": {
-    "16": "16-drive.png"
+    "16": "16-drive.png",
+    "48": "48-drive.png",
+    "128": "128-drive.png"
   },
 
   "permissions": [

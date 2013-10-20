@@ -5,6 +5,7 @@
 
 // Called when authorization server replies.
 function handleAuthResult(authResult) {
+  console.log(authResult);
   var authButton = document.getElementById('authorizeButton');
   var authStatus = document.getElementById('authorizeStatus');
   authButton.style.display = 'none';
@@ -20,3 +21,4 @@ function handleAuthResult(authResult) {
         handleAuthResult);
     };
   }
+}
