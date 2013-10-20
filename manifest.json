@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Google Drive Search",
-  "description": "Search your google drive directly from the omnibox!",
+  "name": "Omnibox Google Drive Search",
+  "description": "Search and open your Google Drive files from the omnibox!",
   "version": "0.0.1",
 
   "background": {
@@ -19,7 +19,9 @@
   "permissions": [
     "tabs",
     "https://www.googleapis.com/",
-    "https://apis.google.com/"
+    "https://apis.google.com/",
+    "https://www.google.com/",
+    "https://accounts.google.com/"
   ],
 
   "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
