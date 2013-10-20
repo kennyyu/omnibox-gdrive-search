@@ -16,7 +16,7 @@ function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
     // Access token has been successfully retrieved
     console.log("auth worked");
-    initData();
+    //initData();
   } else {
     // auth failed
     console.log("auth failed, must init manually");
@@ -73,12 +73,13 @@ chrome.omnibox.onInputChanged.addListener(
         'path': '/drive/v2/files',
         'method': 'GET',
         'params': {
-//          'q' : text,
+          'q' : 'title contains \'' + text + '\'',
           'maxResults': MAX_SEARCH_RESULTS,
         }
       });
       request.execute(function(response) {
         console.log(response);
+        /*
         for (var i in response.items) {
           var item = response.items[i];
           data[item.id] = {
@@ -86,17 +87,17 @@ chrome.omnibox.onInputChanged.addListener(
             description: item.title,
             time: new Date(item.lastViewedByMeDate),
           };
-        }
+        }*/
 
         var suggestions = [];
         text = escapeString(text);
-        for (var i in data) {
-          var item = data[i];
-          var desc = item.description;
+        for (var i in response.items) {
+          var item = response.items[i];
+          var desc = item.title;
           var index = desc.toLowerCase().search(text.toLowerCase());
           if (index != -1) {
             suggestions.push({
-              content: encodeURI(item.content),
+              content: encodeURI(item.alternateLink),
               description: escapeString(
                 "<dim>" + desc.slice(0, index) + "</dim>"
                 + "<match>" + desc.slice(index, index + text.length) + "</match>"
@@ -105,8 +106,8 @@ chrome.omnibox.onInputChanged.addListener(
           }
         }
         // Return only the first 8, sorted by the last time user viewed them
-        suggestions = suggestions.slice(0, 8);
-        suggestions.sort(function(a, b) {return a.time - b.time;});
+//        suggestions = suggestions.slice(0, 8);
+//        suggestions.sort(function(a, b) {return a.time - b.time;});
         console.log(suggestions);
         suggest(suggestions);
       });
