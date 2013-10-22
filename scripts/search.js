@@ -7,16 +7,9 @@
 // Maximum number of search results for each request
 MAX_SEARCH_RESULTS = 10;
 
-APP_ID = "mdgheehhnmlmpppebadbbdaodpfblebe";
+// Chrome Extension ID
+APP_ID = "faadbnlolclhboooficaklnhnkdjmdnb";
 OPTIONS_PAGE = "chrome-extension://" + APP_ID + "/options.html";
-
-// Refresh the background page every 15 minutes.
-// This is so that the background page can renew it's authorization
-// lease for the drive API.
-//POLLING_INTERVAL = 900000;
-//window.setInterval(
-//  function() {location.reload();},
-//  POLLING_INTERVAL);
 
 // Called when authorization server replies.
 function handleAuthResult(authResult) {

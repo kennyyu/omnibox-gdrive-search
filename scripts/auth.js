@@ -4,8 +4,7 @@
 // author: Kenny Yu
 
 // Google Drive Client ID
-//var CLIENT_ID = '372787255618-aceaf3i3kcv6b5uih4tjtt3kdmd0lcj0.apps.googleusercontent.com';
-var CLIENT_ID = '372787255618-44gl1i6ashgnp39eb7re5dii3s5kg70j.apps.googleusercontent.com';
+var CLIENT_ID = '372787255618-aceaf3i3kcv6b5uih4tjtt3kdmd0lcj0.apps.googleusercontent.com';
 
 // Google Drive API permissions */
 var SCOPES = [
