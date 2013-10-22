@@ -7,6 +7,17 @@
 // Maximum number of search results for each request
 MAX_SEARCH_RESULTS = 10;
 
+APP_ID = "mdgheehhnmlmpppebadbbdaodpfblebe";
+OPTIONS_PAGE = "chrome-extension://" + APP_ID + "/options.html";
+
+// Refresh the background page every 15 minutes.
+// This is so that the background page can renew it's authorization
+// lease for the drive API.
+//POLLING_INTERVAL = 900000;
+//window.setInterval(
+//  function() {location.reload();},
+//  POLLING_INTERVAL);
+
 // Called when authorization server replies.
 function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
@@ -52,6 +63,21 @@ chrome.omnibox.onInputChanged.addListener(
     // matches and highlight it with the <match></match> tag.
     request.execute(function(response) {
       console.log(response);
+      if (response.error) {
+        // If we get a 403 error, it's probably because we need renew
+        // our authorization lease. Let's reload the page to do that.
+        // If it's not a 403 error, send the user to the options page
+        if (response.error.code == 403) {
+          location.reload();
+        } else {
+          chrome.tabs.query(
+            {active: true, currentWindow: true},
+            function(tabs) {
+              chrome.tabs.update(tabs[0].id, {url: OPTIONS_PAGE});
+            });
+        }
+        return;
+      }
       var suggestions = [];
       text = escapeString(text);
       for (var i in response.items) {
