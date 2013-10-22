@@ -3,7 +3,7 @@
 
   "name": "Omnibox GDrive Search",
   "description": "Search and open your Google Drive files from the omnibox!",
-  "version": "0.0.1",
+  "version": "0.0.2",
 
   "background": {
     "page": "background.html"
